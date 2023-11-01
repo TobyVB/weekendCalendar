@@ -1,35 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [months, setMonths] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]);
+  const strMonth = (num) => {
+    if (num === 0) {
+      return "January";
+    }
+    if (num === 1) {
+      return "February";
+    }
+    if (num === 2) {
+      return "March";
+    }
+    if (num === 3) {
+      return "April";
+    }
+    if (num === 4) {
+      return "May";
+    }
+    if (num === 5) {
+      return "June";
+    }
+    if (num === 6) {
+      return "July";
+    }
+    if (num === 7) {
+      return "August";
+    }
+    if (num === 8) {
+      return "September";
+    }
+    if (num === 9) {
+      return "October";
+    }
+    if (num === 10) {
+      return "November";
+    }
+    if (num === 11) {
+      return "December";
+    }
+  };
 
+  const getMonths = () => {
+    const today = new Date();
+    const theMonth = today.getMonth();
+    const oneMonthAgo = today.setMonth(today.getMonth() - 1);
+
+    console.log(today);
+    console.log(theMonth);
+    console.log(strMonth(theMonth));
+    console.log(oneMonthAgo);
+  };
+
+  getMonths();
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Event Planner</h1>
+        {/* <div style={{ display: "flex" }}>
+          {months.map((month) => {
+            return <div style={{ color: "white" }}>{month}</div>;
+          })}
+        </div> */}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
