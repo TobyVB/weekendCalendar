@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -53,38 +53,53 @@ function App() {
   //   console.log(oneMonthAgo);
   // };
 
+  const [days, setDays] = useState();
+
   const yearDist = () => {
     const days = [];
     const date = new Date();
-    console.log(date);
 
+    // add past year to array
     for (let i = 365; i > 0; i--) {
       const date = new Date();
       const prevDate = new Date(date);
       prevDate.setDate(prevDate.getDate() - i);
-      days.push(prevDate);
+      if (prevDate.getDay() == 5 || prevDate.getDay() == 6) {
+        days.push(prevDate);
+      }
     }
-    days.push(date);
+
+    // add today to array
+    if (date.getDate() === 5 || date.getDate() === 6) {
+      days.push(date);
+    }
+
+    // add future year to array
     for (let i = 1; i < 365; i++) {
       const date = new Date();
       const newerDate = new Date(date);
       newerDate.setDate(newerDate.getDate() + i);
-      days.push(newerDate);
+      if (newerDate.getDay() == 5 || newerDate.getDay() == 6) {
+        days.push(newerDate);
+      }
     }
-    console.log(days[366].toDateString());
+    setDays((prev) => days);
   };
-  yearDist();
 
-  getMonths();
+  useEffect(() => {
+    yearDist();
+  }, []);
+
   return (
     <>
       <div>
         <h1>Event Planner</h1>
-        {/* <div style={{ display: "flex" }}>
-          {months.map((month) => {
-            return <div style={{ color: "white" }}>{month}</div>;
-          })}
-        </div> */}
+        <div style={{ display: "flex" }}>
+          {days &&
+            days.map((day) => {
+              return <div style={{ color: "white" }}>{day.toDateString()}</div>;
+            })}
+        </div>
       </div>
     </>
   );
