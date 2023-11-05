@@ -1,105 +1,73 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Calendar from "./components/Calendar";
 
 function App() {
-  // const [months, setMonths] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]);
-  const strMonth = (num) => {
-    if (num === 0) {
-      return "January";
-    }
-    if (num === 1) {
-      return "February";
-    }
-    if (num === 2) {
-      return "March";
-    }
-    if (num === 3) {
-      return "April";
-    }
-    if (num === 4) {
-      return "May";
-    }
-    if (num === 5) {
-      return "June";
-    }
-    if (num === 6) {
-      return "July";
-    }
-    if (num === 7) {
-      return "August";
-    }
-    if (num === 8) {
-      return "September";
-    }
-    if (num === 9) {
-      return "October";
-    }
-    if (num === 10) {
-      return "November";
-    }
-    if (num === 11) {
-      return "December";
-    }
+  const date = new Date();
+
+  const [monthValue, setMonthValue] = useState();
+  const [yearValue, setYearValue] = useState();
+
+  const handleMonthChange = (event) => {
+    setMonthValue(event.target.value);
   };
-
-  // const getMonths = () => {
-  //   const today = new Date();
-  //   const theMonth = today.getMonth();
-  //   const oneMonthAgo = today.setMonth(today.getMonth() - 1);
-
-  //   console.log(today);
-  //   console.log(theMonth);
-  //   console.log(strMonth(theMonth));
-  //   console.log(oneMonthAgo);
-  // };
-
-  const [days, setDays] = useState();
-
-  const yearDist = () => {
-    const days = [];
-    const date = new Date();
-
-    // add past year to array
-    for (let i = 365; i > 0; i--) {
-      const date = new Date();
-      const prevDate = new Date(date);
-      prevDate.setDate(prevDate.getDate() - i);
-      if (prevDate.getDay() == 5 || prevDate.getDay() == 6) {
-        days.push(prevDate);
-      }
-    }
-
-    // add today to array
-    if (date.getDate() === 5 || date.getDate() === 6) {
-      days.push(date);
-    }
-
-    // add future year to array
-    for (let i = 1; i < 365; i++) {
-      const date = new Date();
-      const newerDate = new Date(date);
-      newerDate.setDate(newerDate.getDate() + i);
-      if (newerDate.getDay() == 5 || newerDate.getDay() == 6) {
-        days.push(newerDate);
-      }
-    }
-    setDays((prev) => days);
+  const handleYearChange = (event) => {
+    setYearValue(event.target.value);
   };
-
-  useEffect(() => {
-    yearDist();
-  }, []);
 
   return (
     <>
       <div>
         <h1>Event Planner</h1>
-        <div style={{ display: "flex" }}>
-          {days &&
-            days.map((day) => {
-              return <div style={{ color: "white" }}>{day.toDateString()}</div>;
-            })}
+        <div
+          style={{
+            display: "flex",
+            gap: "3em",
+            width: "80%",
+            margin: "auto",
+            marginBottom: "2em",
+            justifyContent: "center",
+          }}
+        >
+          <select
+            defaultValue={date.getMonth()}
+            onChange={handleMonthChange}
+            placeholder="month"
+          >
+            <option value={0}>January</option>
+            <option value={1}>February</option>
+            <option value={2}>March</option>
+            <option value={3}>April</option>
+            <option value={4}>May</option>
+            <option value={5}>June</option>
+            <option value={6}>July</option>
+            <option value={7}>August</option>
+            <option value={8}>September</option>
+            <option value={9}>October</option>
+            <option value={10}>November</option>
+            <option value={11}>December</option>
+          </select>
+          <select
+            defaultValue={date.getFullYear()}
+            onChange={handleYearChange}
+            placeholder="year"
+          >
+            <option value={date.getFullYear() - 2}>
+              {date.getFullYear() - 2}
+            </option>
+            <option value={date.getFullYear() - 1}>
+              {date.getFullYear() - 1}
+            </option>
+            <option value={date.getFullYear()}>{date.getFullYear()}</option>
+            <option value={date.getFullYear() + 1}>
+              {date.getFullYear() + 1}
+            </option>
+            <option value={date.getFullYear() + 2}>
+              {date.getFullYear() + 2}
+            </option>
+          </select>
         </div>
+        <Calendar month={monthValue} year={yearValue} />
       </div>
     </>
   );
