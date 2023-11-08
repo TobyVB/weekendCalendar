@@ -4,3 +4,42 @@
   padding: 2rem;
   text-align: center;
 }
+.date {
+  color: white;
+  border-bottom: 1px solid white;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.noDate {
+  color: white;
+  border-bottom: 1px solid white;
+  height: 50px;
+}
+.day-title {
+  color: white;
+  border-bottom: 1px solid white;
+  height: 50px;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+.vertical-rule {
+  height: 327px;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+}
+.year {
+  margin: -1.5em 0 0 0;
+  text-shadow: 1px 1px 2px black;
+  font-weight: 800;
+}
+.month {
+  border: 1px solid white;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.iterate-month {
+  border: 1px solid white;
+  align-self: flex-start;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.65);
+}

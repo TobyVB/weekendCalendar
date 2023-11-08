@@ -18,8 +18,6 @@ export default function Calendar(props) {
     ];
     return months[num];
   };
-  const [selectMonths, setSelectMonths] = useState(false);
-  const [selectYears, setSelectYears] = useState(false);
 
   const presentDate = new Date();
   const [currentDate, setCurrentDate] = useState(presentDate);
@@ -129,64 +127,20 @@ export default function Calendar(props) {
           </>
         )}
         <div style={{ display: "flex", flexDirection: "column", width: "20%" }}>
-          <h4
-            style={{
-              margin: "0",
-              marginTop: "-1.5em",
-              textShadow: "1px 1px 2px black",
-              fontWeight: "800",
-            }}
-          >
-            {newDate.getFullYear()}
-          </h4>
-          <h3
-            style={{
-              border: "1px solid white",
-              margin: "0",
-              backgroundColor: "rgba(0,0,0,.75)",
-            }}
-          >
-            {strMonth(newDate.getMonth())}
-          </h3>
+          <h4 className="year">{newDate.getFullYear()}</h4>
+          <h3 className="month">{strMonth(newDate.getMonth())}</h3>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div style={{ width: "100%" }}>
-              <h4
-                style={{
-                  color: "white",
-                  borderBottom: "1px solid white",
-                  height: "50px",
-                  margin: "0",
-                  backgroundColor: "rgba(0,0,0,.65)",
-                }}
-              >
-                Fri
-              </h4>
+              <h4 className="day-title">Fri</h4>
               <div style={{ width: "100%" }}>
                 {dates &&
                   dates.map((date, idx) => {
                     if (date.getDay() == 6 && date.getDate() == 1) {
-                      return (
-                        <div
-                          style={{
-                            color: "white",
-                            borderBottom: "1px solid white",
-                            height: "50px",
-                          }}
-                          key={idx}
-                        ></div>
-                      );
+                      return <div className="noDate" key={idx}></div>;
                     }
                     if (date.getDay() == 5) {
                       return (
-                        <div
-                          style={{
-                            color: "white",
-                            borderBottom: "1px solid white",
-                            height: "50px",
-                            backgroundColor: "rgba(0,0,0,.5)",
-                          }}
-                          key={idx}
-                        >
+                        <div className="date" key={idx}>
                           {date.getDate()}
                         </div>
                       );
@@ -196,31 +150,13 @@ export default function Calendar(props) {
             </div>
             <hr style={{ height: "295px" }} />
             <div style={{ width: "100%" }}>
-              <h4
-                style={{
-                  color: "white",
-                  borderBottom: "1px solid white",
-                  height: "50px",
-                  margin: "0",
-                  backgroundColor: "rgba(0,0,0,.65)",
-                }}
-              >
-                Sat
-              </h4>
+              <h4 className="day-title">Sat</h4>
               <div style={{ width: "100%" }}>
                 {dates &&
                   dates.map((date, idx) => {
                     if (date.getDay() == 6) {
                       return (
-                        <div
-                          style={{
-                            color: "white",
-                            borderBottom: "1px solid white",
-                            height: "50px",
-                            backgroundColor: "rgba(0,0,0,.5)",
-                          }}
-                          key={idx}
-                        >
+                        <div className="date" key={idx}>
                           {date.getDate()}
                         </div>
                       );
@@ -245,15 +181,7 @@ export default function Calendar(props) {
       >
         {
           <>
-            <button
-              style={{
-                border: "1px solid white",
-                alignSelf: "flex-start",
-                margin: "auto",
-                background: "rgba(0,0,0,.65)",
-              }}
-              onClick={() => scanMonth(-1)}
-            >
+            <button className="iterate-month" onClick={() => scanMonth(-1)}>
               prev
             </button>
             <div
@@ -268,48 +196,16 @@ export default function Calendar(props) {
               }}
             >
               <Month dif={-2} />
-              <hr
-                style={{
-                  height: "327px",
-                  borderLeft: "1px solid rgba(255,255,255,1)",
-                  borderRight: "1px solid rgba(255,255,255,1)",
-                }}
-              />
+              <hr className="vertical-rule" />
               <Month dif={-1} />
-              <hr
-                style={{
-                  height: "327px",
-                  borderLeft: "1px solid rgba(255,255,255,1)",
-                  borderRight: "1px solid rgba(255,255,255,1)",
-                }}
-              />
+              <hr className="vertical-rule" />
               <Month dif={0} />
-              <hr
-                style={{
-                  height: "327px",
-                  borderLeft: "1px solid rgba(255,255,255,1)",
-                  borderRight: "1px solid rgba(255,255,255,1)",
-                }}
-              />
+              <hr className="vertical-rule" />
               <Month dif={+1} />
-              <hr
-                style={{
-                  height: "327px",
-                  borderLeft: "1px solid rgba(255,255,255,1)",
-                  borderRight: "1px solid rgba(255,255,255,1)",
-                }}
-              />
+              <hr className="vertical-rule" />
               <Month dif={+2} />
             </div>
-            <button
-              style={{
-                border: "1px solid white",
-                alignSelf: "flex-start",
-                margin: "auto",
-                background: "rgba(0,0,0,.65)",
-              }}
-              onClick={() => scanMonth(+1)}
-            >
+            <button className="iterate-month" onClick={() => scanMonth(+1)}>
               next
             </button>
           </>
