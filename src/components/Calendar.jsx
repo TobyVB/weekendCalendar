@@ -1,82 +1,53 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Calendar(props) {
   const strMonth = (num) => {
-    if (num === 0) {
-      return "January";
-    }
-    if (num === 1) {
-      return "February";
-    }
-    if (num === 2) {
-      return "March";
-    }
-    if (num === 3) {
-      return "April";
-    }
-    if (num === 4) {
-      return "May";
-    }
-    if (num === 5) {
-      return "June";
-    }
-    if (num === 6) {
-      return "July";
-    }
-    if (num === 7) {
-      return "August";
-    }
-    if (num === 8) {
-      return "September";
-    }
-    if (num === 9) {
-      return "October";
-    }
-    if (num === 10) {
-      return "November";
-    }
-    if (num === 11) {
-      return "December";
-    }
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    return months[num];
+  };
+  const [selectMonths, setSelectMonths] = useState(false);
+  const [selectYears, setSelectYears] = useState(false);
+
+  const presentDate = new Date();
+  const [currentDate, setCurrentDate] = useState(presentDate);
+  const [monthValue, setMonthValue] = useState(currentDate.getMonth());
+  const [yearValue, setYearValue] = useState(currentDate.getFullYear());
+
+  const scanMonth = (num) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() + num);
+    setCurrentDate(newDate);
+  };
+  const selectMonth = (num) => {
+    const newDate = new Date(currentDate);
+    newDate.setMonth(num.target.value);
+    setCurrentDate(newDate);
+    setMonthValue(newDate.getMonth());
+  };
+  const selectYear = (num) => {
+    const newDate = new Date(currentDate);
+    newDate.setFullYear(num.target.value);
+    setCurrentDate(newDate);
+    setYearValue(newDate.getFullYear());
   };
 
-  const [currentDif, setCurrentDif] = useState(0);
-  const [select, setSelect] = useState(false);
-  const [oldMonth, setOldMonth] = useState(false);
-  const [oldYear, setOldYear] = useState(false);
-
-  if (props.month !== oldMonth) {
-    setOldMonth(props.month);
-    setSelect(true);
-  }
-  if (props.year !== oldYear) {
-    setOldYear(props.year);
-    setSelect(true);
-  }
-
-  useEffect(() => {
-    setSelect(false);
-  }, [oldMonth]);
-  // useEffect(() => {
-  //   setSelect((prev) => !prev);
-  // }, [oldYear]);
-
   const Month = (props) => {
-    // figure out how to pass the current month and year back into app.jsx
-    // and the passed value will be the selected
-    const date = new Date();
-    const newDate = date;
-    if (props.month == undefined) {
-      newDate.setMonth(newDate.getMonth() + props.dif + props.curDif);
-    } else {
-      newDate.setMonth(Number(props.month) + props.dif + props.curDif);
-    }
-    if (select === true) {
-      newDate.setFullYear(Number(props.year));
-    }
-    // if (props.year !== undefined) {
-    //   newDate.setFullYear(Number(props.year));
-    // }
+    const newDate = new Date(currentDate);
+    newDate.setMonth(newDate.getMonth() + props.dif);
+
     const daysInMonth = new Date(
       newDate.getFullYear(),
       newDate.getMonth(),
@@ -109,108 +80,157 @@ export default function Calendar(props) {
     }
 
     return (
-      <div style={{ display: "flex", flexDirection: "column", width: "20%" }}>
-        <h4
-          style={{
-            margin: "0",
-            marginTop: "-1.5em",
-            textShadow: "1px 1px 2px black",
-            fontWeight: "800",
-          }}
-        >
-          {newDate.getFullYear()}
-        </h4>
-        <h3
-          style={{
-            border: "1px solid white",
-            margin: "0",
-            backgroundColor: "rgba(0,0,0,.75)",
-          }}
-        >
-          {strMonth(newDate.getMonth())}
-        </h3>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <div style={{ width: "100%" }}>
-            <h4
+      <>
+        {props.dif == 0 && (
+          <>
+            <div
               style={{
-                color: "white",
-                borderBottom: "1px solid white",
-                height: "50px",
-                margin: "0",
-                backgroundColor: "rgba(0,0,0,.65)",
+                position: "fixed",
+                display: "flex",
+                gap: "3em",
+                width: "80%",
+                margin: "auto",
+                marginTop: "-5em",
+                justifyContent: "center",
               }}
             >
-              Fri
-            </h4>
-            <div style={{ width: "100%" }}>
-              {dates &&
-                dates.map((date, idx) => {
-                  if (date.getDay() == 6 && date.getDate() == 1) {
-                    return (
-                      <div
-                        style={{
-                          color: "white",
-                          borderBottom: "1px solid white",
-                          height: "50px",
-                        }}
-                        key={idx}
-                      ></div>
-                    );
-                  }
-                  if (date.getDay() == 5) {
-                    return (
-                      <div
-                        style={{
-                          color: "white",
-                          borderBottom: "1px solid white",
-                          height: "50px",
-                          backgroundColor: "rgba(0,0,0,.5)",
-                        }}
-                        key={idx}
-                      >
-                        {date.getDate()}
-                      </div>
-                    );
-                  }
-                })}
+              <select value={monthValue} onChange={selectMonth}>
+                <option value={0}>January</option>
+                <option value={1}>February</option>
+                <option value={2}>March</option>
+                <option value={3}>April</option>
+                <option value={4}>May</option>
+                <option value={5}>June</option>
+                <option value={6}>July</option>
+                <option value={7}>August</option>
+                <option value={8}>September</option>
+                <option value={9}>October</option>
+                <option value={10}>November</option>
+                <option value={11}>December</option>
+              </select>
+              <select value={yearValue} onChange={selectYear}>
+                <option value={presentDate.getFullYear() - 2}>
+                  {presentDate.getFullYear() - 2}
+                </option>
+                <option value={presentDate.getFullYear() - 1}>
+                  {presentDate.getFullYear() - 1}
+                </option>
+                <option value={presentDate.getFullYear()}>
+                  {presentDate.getFullYear()}
+                </option>
+                <option value={presentDate.getFullYear() + 1}>
+                  {presentDate.getFullYear() + 1}
+                </option>
+                <option value={presentDate.getFullYear() + 2}>
+                  {presentDate.getFullYear() + 2}
+                </option>
+              </select>
             </div>
-          </div>
-          <hr style={{ height: "295px" }} />
-          <div style={{ width: "100%" }}>
-            <h4
-              style={{
-                color: "white",
-                borderBottom: "1px solid white",
-                height: "50px",
-                margin: "0",
-                backgroundColor: "rgba(0,0,0,.65)",
-              }}
-            >
-              Sat
-            </h4>
+          </>
+        )}
+        <div style={{ display: "flex", flexDirection: "column", width: "20%" }}>
+          <h4
+            style={{
+              margin: "0",
+              marginTop: "-1.5em",
+              textShadow: "1px 1px 2px black",
+              fontWeight: "800",
+            }}
+          >
+            {newDate.getFullYear()}
+          </h4>
+          <h3
+            style={{
+              border: "1px solid white",
+              margin: "0",
+              backgroundColor: "rgba(0,0,0,.75)",
+            }}
+          >
+            {strMonth(newDate.getMonth())}
+          </h3>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div style={{ width: "100%" }}>
-              {dates &&
-                dates.map((date, idx) => {
-                  if (date.getDay() == 6) {
-                    return (
-                      <div
-                        style={{
-                          color: "white",
-                          borderBottom: "1px solid white",
-                          height: "50px",
-                          backgroundColor: "rgba(0,0,0,.5)",
-                        }}
-                        key={idx}
-                      >
-                        {date.getDate()}
-                      </div>
-                    );
-                  }
-                })}
+              <h4
+                style={{
+                  color: "white",
+                  borderBottom: "1px solid white",
+                  height: "50px",
+                  margin: "0",
+                  backgroundColor: "rgba(0,0,0,.65)",
+                }}
+              >
+                Fri
+              </h4>
+              <div style={{ width: "100%" }}>
+                {dates &&
+                  dates.map((date, idx) => {
+                    if (date.getDay() == 6 && date.getDate() == 1) {
+                      return (
+                        <div
+                          style={{
+                            color: "white",
+                            borderBottom: "1px solid white",
+                            height: "50px",
+                          }}
+                          key={idx}
+                        ></div>
+                      );
+                    }
+                    if (date.getDay() == 5) {
+                      return (
+                        <div
+                          style={{
+                            color: "white",
+                            borderBottom: "1px solid white",
+                            height: "50px",
+                            backgroundColor: "rgba(0,0,0,.5)",
+                          }}
+                          key={idx}
+                        >
+                          {date.getDate()}
+                        </div>
+                      );
+                    }
+                  })}
+              </div>
+            </div>
+            <hr style={{ height: "295px" }} />
+            <div style={{ width: "100%" }}>
+              <h4
+                style={{
+                  color: "white",
+                  borderBottom: "1px solid white",
+                  height: "50px",
+                  margin: "0",
+                  backgroundColor: "rgba(0,0,0,.65)",
+                }}
+              >
+                Sat
+              </h4>
+              <div style={{ width: "100%" }}>
+                {dates &&
+                  dates.map((date, idx) => {
+                    if (date.getDay() == 6) {
+                      return (
+                        <div
+                          style={{
+                            color: "white",
+                            borderBottom: "1px solid white",
+                            height: "50px",
+                            backgroundColor: "rgba(0,0,0,.5)",
+                          }}
+                          key={idx}
+                        >
+                          {date.getDate()}
+                        </div>
+                      );
+                    }
+                  })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   };
 
@@ -232,10 +252,7 @@ export default function Calendar(props) {
                 margin: "auto",
                 background: "rgba(0,0,0,.65)",
               }}
-              onClick={() => {
-                setCurrentDif((prev) => prev - 1);
-                setSelect(false);
-              }}
+              onClick={() => scanMonth(-1)}
             >
               prev
             </button>
@@ -250,12 +267,7 @@ export default function Calendar(props) {
                 margin: "0 2em",
               }}
             >
-              <Month
-                month={props.month}
-                year={props.year}
-                dif={-2}
-                curDif={currentDif}
-              />
+              <Month dif={-2} />
               <hr
                 style={{
                   height: "327px",
@@ -263,12 +275,7 @@ export default function Calendar(props) {
                   borderRight: "1px solid rgba(255,255,255,1)",
                 }}
               />
-              <Month
-                month={props.month}
-                year={props.year}
-                dif={-1}
-                curDif={currentDif}
-              />
+              <Month dif={-1} />
               <hr
                 style={{
                   height: "327px",
@@ -276,12 +283,7 @@ export default function Calendar(props) {
                   borderRight: "1px solid rgba(255,255,255,1)",
                 }}
               />
-              <Month
-                month={props.month}
-                year={props.year}
-                dif={0}
-                curDif={currentDif}
-              />
+              <Month dif={0} />
               <hr
                 style={{
                   height: "327px",
@@ -289,12 +291,7 @@ export default function Calendar(props) {
                   borderRight: "1px solid rgba(255,255,255,1)",
                 }}
               />
-              <Month
-                month={props.month}
-                year={props.year}
-                dif={+1}
-                curDif={currentDif}
-              />
+              <Month dif={+1} />
               <hr
                 style={{
                   height: "327px",
@@ -302,12 +299,7 @@ export default function Calendar(props) {
                   borderRight: "1px solid rgba(255,255,255,1)",
                 }}
               />
-              <Month
-                month={props.month}
-                year={props.year}
-                dif={+2}
-                curDif={currentDif}
-              />
+              <Month dif={+2} />
             </div>
             <button
               style={{
@@ -316,10 +308,7 @@ export default function Calendar(props) {
                 margin: "auto",
                 background: "rgba(0,0,0,.65)",
               }}
-              onClick={() => {
-                setCurrentDif((prev) => prev + 1);
-                setSelect(false);
-              }}
+              onClick={() => scanMonth(+1)}
             >
               next
             </button>
