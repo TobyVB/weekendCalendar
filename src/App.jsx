@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <div>
-        <h1 style={{ paddingBottom: "1.5em" }}>Event Planner</h1>
+        <h1 className="title">Event Planner</h1>
 
         <Calendar month={undefined} year={undefined} />
       </div>

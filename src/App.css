@@ -6,18 +6,19 @@
 }
 .date {
   color: white;
-  border-bottom: 1px solid white;
+  border: 1px solid white;
   height: 50px;
   background-color: rgba(0, 0, 0, 0.5);
 }
 .noDate {
   color: white;
-  border-bottom: 1px solid white;
+  border: 1px solid white;
   height: 50px;
+  background-color: rgba(255, 255, 255, 0.25);
 }
 .day-title {
   color: white;
-  border-bottom: 1px solid white;
+  border: 1px solid white;
   height: 50px;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.65);
@@ -42,4 +43,45 @@
   align-self: flex-start;
   margin: auto;
   background: rgba(0, 0, 0, 0.65);
+  margin: auto 2em;
+}
+.spacer-div {
+  width: 5px;
+  background-color: white;
+  height: 100%;
+}
+.title {
+  padding-bottom: 1.5em;
+}
+@media screen and (min-width: 500px) {
+  .iterate-month-sm {
+    display: none;
+  }
+}
+@media screen and (max-width: 500px) {
+  .medium-screen {
+    display: none;
+  }
+  /* .small-screen {
+    display: none;
+  } */
+  .iterate-month {
+    font-size: 1rem;
+    margin: 1em;
+    display: none;
+  }
+  .iterate-month-sm {
+    margin: 0.5em;
+  }
+  .title {
+    font-size: 2rem;
+    margin-top: 2em;
+  }
+  .title {
+    margin-top: 0.5em;
+    padding-bottom: 3em;
+  }
+  .spacer-div {
+    display: none;
+  }
 }

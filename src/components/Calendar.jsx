@@ -100,18 +100,16 @@ export default function Calendar(props) {
     }
 
     return (
-      <>
+      <div className={props.screen}>
         {props.dif == 0 && (
-          <>
+          <div style={{ width: "0%" }}>
             <div
               style={{
                 position: "absolute",
                 display: "flex",
-                gap: "3em",
-                width: "80%",
-                margin: "auto",
+                flexDirection: "column",
+                gap: ".5em",
                 marginTop: "-5em",
-                justifyContent: "center",
               }}
             >
               <select value={monthValue} onChange={selectMonth}>
@@ -146,7 +144,7 @@ export default function Calendar(props) {
                 </option>
               </select>
             </div>
-          </>
+          </div>
         )}
         <div
           style={{ display: "flex", flexDirection: "column", width: "100px" }}
@@ -171,7 +169,6 @@ export default function Calendar(props) {
                   })}
               </div>
             </div>
-            <hr style={{ height: "295px" }} />
             <div style={{ width: "100%" }}>
               <h4 className="day-title">Sat</h4>
               <div style={{ width: "100%" }}>
@@ -193,7 +190,7 @@ export default function Calendar(props) {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   };
 
@@ -203,7 +200,6 @@ export default function Calendar(props) {
         style={{
           display: "flex",
           justifyContent: "space-around",
-          height: "300px",
         }}
       >
         <button
@@ -213,18 +209,36 @@ export default function Calendar(props) {
         >
           prev
         </button>
-        <Month dif={-2} />
-        <hr className="vertical-rule" />
-        <Month dif={-1} />
-        <hr className="vertical-rule" />
-        <Month dif={0} />
-        <hr className="vertical-rule" />
-        <Month dif={+1} />
-        <hr className="vertical-rule" />
-        <Month dif={+2} />
+        <div style={{ display: "flex" }}>
+          <Month dif={-2} screen="medium-screen" />
+          <div className="spacer-div"></div>
+          <Month dif={-1} screen="small-screen" />
+          <div className="spacer-div"></div>
+          <Month dif={0} screen="" />
+          <div className="spacer-div"></div>
+          <Month dif={+1} screen="small-screen" />
+          <div className="spacer-div"></div>
+          <Month dif={+2} screen="medium-screen" />
+        </div>
         <button
           disabled={maxMet && "true"}
           className="iterate-month"
+          onClick={() => scanMonth(+1)}
+        >
+          next
+        </button>
+      </div>
+      <div style={{ margin: "2em" }}>
+        <button
+          disabled={minMet && "true"}
+          className="iterate-month-sm"
+          onClick={() => scanMonth(-1)}
+        >
+          prev
+        </button>
+        <button
+          disabled={maxMet && "true"}
+          className="iterate-month-sm"
           onClick={() => scanMonth(+1)}
         >
           next
