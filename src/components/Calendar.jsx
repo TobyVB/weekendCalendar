@@ -23,11 +23,15 @@ export default function Calendar(props) {
   const [currentDate, setCurrentDate] = useState(presentDate);
   const [monthValue, setMonthValue] = useState(currentDate.getMonth());
   const [yearValue, setYearValue] = useState(currentDate.getFullYear());
+  const [minMet, setMinMet] = useState(false);
+  const [maxMet, setMaxMet] = useState(false);
 
   const scanMonth = (num) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(newDate.getMonth() + num);
     setCurrentDate(newDate);
+    setMonthValue(newDate.getMonth());
+    setYearValue(newDate.getFullYear());
   };
   const selectMonth = (num) => {
     const newDate = new Date(currentDate);
@@ -44,6 +48,22 @@ export default function Calendar(props) {
 
   const Month = (props) => {
     const newDate = new Date(currentDate);
+    if (
+      newDate.getMonth() == 9 &&
+      newDate.getFullYear() == presentDate.getFullYear() + 2
+    ) {
+      setMaxMet(true);
+    } else {
+      setMaxMet(false);
+    }
+    if (
+      newDate.getMonth() == 2 &&
+      newDate.getFullYear() == presentDate.getFullYear() - 2
+    ) {
+      setMinMet(true);
+    } else {
+      setMinMet(false);
+    }
     newDate.setMonth(newDate.getMonth() + props.dif);
 
     const daysInMonth = new Date(
@@ -54,18 +74,6 @@ export default function Calendar(props) {
 
     const numFridays = [];
     const numSaturdays = [];
-    for (let i = 1; i <= daysInMonth; i++) {
-      const thisDate = new Date(newDate);
-      thisDate.setDate(i);
-      if (thisDate.getDay() == 5) {
-        numFridays.push(thisDate);
-      }
-      if (thisDate.getDay() == 6) {
-        numSaturdays.push(thisDate);
-      }
-    }
-
-    const dates = [];
     for (let i = 1; i < daysInMonth + 2; i++) {
       const thisDate = new Date(newDate);
       thisDate.setDate(i);
@@ -73,8 +81,22 @@ export default function Calendar(props) {
         if (thisDate.getDate() < 7 === true && i + 1 > daysInMonth - 2) {
           break;
         }
-        dates.push(thisDate);
       }
+      if (i == 1 && thisDate.getDay() == 6) {
+        numFridays.push("empty");
+      }
+      if (thisDate.getDay() == 5) {
+        numFridays.push(thisDate);
+      }
+      if (thisDate.getDay() == 6) {
+        numSaturdays.push(thisDate);
+      }
+    }
+    if (numFridays.length < 5) {
+      numFridays.push("empty");
+    }
+    if (numSaturdays.length < 5) {
+      numSaturdays.push("empty");
     }
 
     return (
@@ -83,7 +105,7 @@ export default function Calendar(props) {
           <>
             <div
               style={{
-                position: "fixed",
+                position: "absolute",
                 display: "flex",
                 gap: "3em",
                 width: "80%",
@@ -126,19 +148,20 @@ export default function Calendar(props) {
             </div>
           </>
         )}
-        <div style={{ display: "flex", flexDirection: "column", width: "20%" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100px" }}
+        >
           <h4 className="year">{newDate.getFullYear()}</h4>
           <h3 className="month">{strMonth(newDate.getMonth())}</h3>
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div style={{ width: "100%" }}>
               <h4 className="day-title">Fri</h4>
               <div style={{ width: "100%" }}>
-                {dates &&
-                  dates.map((date, idx) => {
-                    if (date.getDay() == 6 && date.getDate() == 1) {
+                {numFridays &&
+                  numFridays.map((date, idx) => {
+                    if (date == "empty") {
                       return <div className="noDate" key={idx}></div>;
-                    }
-                    if (date.getDay() == 5) {
+                    } else {
                       return (
                         <div className="date" key={idx}>
                           {date.getDate()}
@@ -152,14 +175,18 @@ export default function Calendar(props) {
             <div style={{ width: "100%" }}>
               <h4 className="day-title">Sat</h4>
               <div style={{ width: "100%" }}>
-                {dates &&
-                  dates.map((date, idx) => {
-                    if (date.getDay() == 6) {
-                      return (
-                        <div className="date" key={idx}>
-                          {date.getDate()}
-                        </div>
-                      );
+                {numSaturdays &&
+                  numSaturdays.map((date, idx) => {
+                    if (date == "empty") {
+                      return <div className="noDate" key={idx}></div>;
+                    } else {
+                      if (date.getDay() == 6) {
+                        return (
+                          <div className="date" key={idx}>
+                            {date.getDate()}
+                          </div>
+                        );
+                      }
                     }
                   })}
               </div>
@@ -179,37 +206,29 @@ export default function Calendar(props) {
           height: "300px",
         }}
       >
-        {
-          <>
-            <button className="iterate-month" onClick={() => scanMonth(-1)}>
-              prev
-            </button>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                width: "50vw",
-                height: "338px",
-                border: "3px solid white",
-                backgroundColor: "rgba(255,255,255,.25)",
-                margin: "0 2em",
-              }}
-            >
-              <Month dif={-2} />
-              <hr className="vertical-rule" />
-              <Month dif={-1} />
-              <hr className="vertical-rule" />
-              <Month dif={0} />
-              <hr className="vertical-rule" />
-              <Month dif={+1} />
-              <hr className="vertical-rule" />
-              <Month dif={+2} />
-            </div>
-            <button className="iterate-month" onClick={() => scanMonth(+1)}>
-              next
-            </button>
-          </>
-        }
+        <button
+          disabled={minMet && "true"}
+          className="iterate-month"
+          onClick={() => scanMonth(-1)}
+        >
+          prev
+        </button>
+        <Month dif={-2} />
+        <hr className="vertical-rule" />
+        <Month dif={-1} />
+        <hr className="vertical-rule" />
+        <Month dif={0} />
+        <hr className="vertical-rule" />
+        <Month dif={+1} />
+        <hr className="vertical-rule" />
+        <Month dif={+2} />
+        <button
+          disabled={maxMet && "true"}
+          className="iterate-month"
+          onClick={() => scanMonth(+1)}
+        >
+          next
+        </button>
       </div>
     </>
   );
