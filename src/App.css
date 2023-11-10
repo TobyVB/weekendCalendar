@@ -4,17 +4,23 @@
   padding: 2rem;
   text-align: center;
 }
+
 .date {
-  color: white;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 2px 2px black;
+  font-weight: bold;
   border: 1px solid white;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(194, 194, 194, 0.5);
+}
+.date p {
+  line-height: 0;
 }
 .noDate {
   color: white;
   border: 1px solid white;
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(180, 180, 180, 0.25);
 }
 .day-title {
   color: white;
@@ -29,7 +35,7 @@
   border-right: 1px solid white;
 }
 .year {
-  margin: -1.5em 0 0 0;
+  margin: -2.5em 0 0 0;
   text-shadow: 1px 1px 2px black;
   font-weight: 800;
 }
@@ -45,13 +51,14 @@
   background: rgba(0, 0, 0, 0.65);
   margin: auto 2em;
 }
-.spacer-div {
+/* .spacer-div {
   width: 5px;
   background-color: white;
   height: 100%;
-}
+} */
 .title {
   padding-bottom: 1.5em;
+  text-shadow: 1px 1px 1px black;
 }
 @media screen and (min-width: 500px) {
   .iterate-month-sm {

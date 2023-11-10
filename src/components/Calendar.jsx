@@ -109,7 +109,7 @@ export default function Calendar(props) {
                 display: "flex",
                 flexDirection: "column",
                 gap: ".5em",
-                marginTop: "-5em",
+                marginTop: "-6em",
               }}
             >
               <select value={monthValue} onChange={selectMonth}>
@@ -147,7 +147,12 @@ export default function Calendar(props) {
           </div>
         )}
         <div
-          style={{ display: "flex", flexDirection: "column", width: "100px" }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100px",
+            border: "5px solid black",
+          }}
         >
           <h4 className="year">{newDate.getFullYear()}</h4>
           <h3 className="month">{strMonth(newDate.getMonth())}</h3>
@@ -162,7 +167,7 @@ export default function Calendar(props) {
                     } else {
                       return (
                         <div className="date" key={idx}>
-                          {date.getDate()}
+                          <p>{date.getDate()}</p>
                         </div>
                       );
                     }
@@ -180,7 +185,7 @@ export default function Calendar(props) {
                       if (date.getDay() == 6) {
                         return (
                           <div className="date" key={idx}>
-                            {date.getDate()}
+                            <p>{date.getDate()}</p>
                           </div>
                         );
                       }
