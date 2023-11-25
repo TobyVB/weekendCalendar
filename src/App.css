@@ -5,51 +5,77 @@
   text-align: center;
 }
 
-.date {
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 2px 2px black;
-  font-weight: bold;
-  border: 1px solid white;
-  height: 50px;
-  background-color: rgba(194, 194, 194, 0.5);
+.container {
+  padding: 0.5em;
+  background-color: #bae2f7;
+  border-radius: 10px;
+  border: 2px solid black;
 }
-.date p {
+
+.date {
+  /* text-shadow: 1px 2px 2px black; */
+  color: black;
+  font-weight: bold;
+  border: 1px solid black;
+  height: 50px;
+  background-color: #cdf5fd;
+}
+
+.date h3 {
   line-height: 0;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.oldDay {
+  color: rgba(0, 0, 0, 0);
+  font-weight: bold;
+  border: 1px solid black;
+  height: 50px;
+  background-color: #cdf5fd;
 }
 .noDate {
-  color: white;
-  border: 1px solid white;
+  border: 1px solid black;
   height: 50px;
-  background-color: rgba(180, 180, 180, 0.25);
+  background-color: rgba(205, 245, 253, 0.516);
 }
 .day-title {
-  color: white;
-  border: 1px solid white;
-  height: 50px;
+  border: 1px solid black;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: #00a9ff;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px black;
 }
+
 .vertical-rule {
   height: 327px;
   border-left: 1px solid white;
   border-right: 1px solid white;
 }
 .year {
-  margin: -2.5em 0 0 0;
-  text-shadow: 1px 1px 2px black;
   font-weight: 800;
+  border: 1px solid black;
+  margin: 0;
+  background-color: #00a9ff;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px black;
 }
 .month {
-  border: 1px solid white;
+  border: 1px solid black;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #cdf5fd;
 }
-.iterate-month {
-  border: 1px solid white;
+.iterate-month,
+.iterate-month-sm {
+  border: 2px solid rgb(0, 0, 0);
   align-self: flex-start;
   margin: auto;
-  background: rgba(0, 0, 0, 0.65);
+  background: #00a9ff;
   margin: auto 2em;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px black;
 }
 /* .spacer-div {
   width: 5px;
@@ -57,8 +83,8 @@
   height: 100%;
 } */
 .title {
-  padding-bottom: 1.5em;
-  text-shadow: 1px 1px 1px black;
+  text-shadow: 1px 2px 1px black;
+  color: #00a9ff;
 }
 @media screen and (min-width: 500px) {
   .iterate-month-sm {
@@ -81,14 +107,8 @@
     margin: 0.5em;
   }
   .title {
-    font-size: 2rem;
-    margin-top: 2em;
-  }
-  .title {
-    margin-top: 0.5em;
-    padding-bottom: 3em;
-  }
-  .spacer-div {
-    display: none;
+    /* font-size: 2rem; */
+    /* margin-top: 2.5em; */
+    padding-bottom: 1em;
   }
 }
