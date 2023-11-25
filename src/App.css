@@ -121,9 +121,15 @@
   .iterate-month-sm {
     display: none;
   }
+  .hide-bg {
+    display: none;
+  }
 }
 @media screen and (max-width: 500px) {
   .medium-screen {
+    display: none;
+  }
+  .hide-sm {
     display: none;
   }
   /* .small-screen {
@@ -141,5 +147,8 @@
     /* font-size: 2rem; */
     /* margin-top: 2.5em; */
     padding-bottom: 1em;
+  }
+  .container {
+    max-width: 359px;
   }
 }

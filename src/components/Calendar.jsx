@@ -137,7 +137,7 @@ export default function Calendar() {
     };
 
     return (
-      <div className={`${props.screen} `}>
+      <div className={`${props.screen} ${props.hide}`}>
         <div
           style={{
             display: "flex",
@@ -280,7 +280,18 @@ export default function Calendar() {
                 animatingReverse === true && "slideMonthReverse"
               }`}
             >
-              <Month data="visible" dif={-3} />
+              <Month
+                data="visible"
+                dif={-3}
+                screen="medium-screen"
+                hide="hide-sm"
+              />
+              <Month
+                data="visible"
+                dif={-2}
+                screen="small-screen"
+                hide="hide-bg"
+              />
               {currentDate >= next2Months ? (
                 <Month data="visible" dif={-2} screen="medium-screen" />
               ) : (
@@ -294,7 +305,18 @@ export default function Calendar() {
               <Month data="visible" dif={0} screen="" />
               <Month data="visible" dif={+1} screen="small-screen" />
               <Month data="visible" dif={+2} screen="medium-screen" />
-              <Month dif={+3} data="visible" />
+              <Month
+                dif={+2}
+                data="visible"
+                screen="small-screen"
+                hide="hide-bg"
+              />
+              <Month
+                dif={+3}
+                data="visible"
+                screen="medium-screen"
+                hide="hide-sm"
+              />
             </div>
           </div>
         </div>
