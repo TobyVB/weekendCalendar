@@ -5,11 +5,42 @@
   text-align: center;
 }
 
+.slideMonth {
+  animation-duration: 0.25s;
+  animation-name: slideinto;
+  position: relative;
+}
+@keyframes slideinto {
+  from {
+    padding-left: 121px;
+    margin-right: -121px;
+    /* opacity: 0; */
+  }
+  to {
+  }
+}
+.slideMonthReverse {
+  animation-duration: 0.25s;
+  animation-name: slideintoReverse;
+  position: relative;
+}
+@keyframes slideintoReverse {
+  from {
+    padding-right: 121px;
+    margin-left: -121px;
+    /* opacity: 0; */
+  }
+  to {
+  }
+}
+
 .container {
   padding: 0.5em;
   background-color: #bae2f7;
   border-radius: 10px;
   border: 2px solid black;
+  overflow: hidden;
+  max-width: 600px;
 }
 
 .date {
@@ -32,7 +63,7 @@
   font-weight: bold;
   border: 1px solid black;
   height: 50px;
-  background-color: #cdf5fd;
+  background-color: #e0b0acb1;
 }
 .noDate {
   border: 1px solid black;

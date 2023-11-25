@@ -19,6 +19,9 @@ export default function Calendar() {
     return months[num];
   };
 
+  // will need to break the animation up into 3 types
+  // one for each of the ends, and one for th middle.
+
   const presentDate = new Date();
   const nextMonth = new Date();
   const next2Months = new Date();
@@ -30,6 +33,8 @@ export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(presentDate);
   const [monthValue, setMonthValue] = useState(currentDate.getMonth());
   const [yearValue, setYearValue] = useState(currentDate.getFullYear());
+  const [animating, setAnimating] = useState(false);
+  const [animatingReverse, setAnimatingReverse] = useState(false);
 
   const scanMonth = (num) => {
     if (
@@ -51,10 +56,16 @@ export default function Calendar() {
     setCurrentDate(newDate);
     setMonthValue(newDate.getMonth());
     setYearValue(newDate.getFullYear());
-    if (num === -1) {
-      setCount((prev) => prev - 1);
+    if (num === 1) {
+      setAnimating(true);
+      setTimeout(() => {
+        setAnimating(false);
+      }, 250);
     } else {
-      setCount((prev) => prev + 1);
+      setAnimatingReverse(true);
+      setTimeout(() => {
+        setAnimatingReverse(false);
+      }, 250);
     }
   };
   const selectMonth = (num) => {
@@ -126,7 +137,7 @@ export default function Calendar() {
     };
 
     return (
-      <div className={props.screen}>
+      <div className={`${props.screen} `}>
         <div
           style={{
             display: "flex",
@@ -149,7 +160,11 @@ export default function Calendar() {
                       return (
                         <div
                           className={
-                            props.data === "visible" ? "date" : "oldDay"
+                            props.data === "visible"
+                              ? date >= presentDate
+                                ? "date"
+                                : "oldDay"
+                              : "oldDay"
                           }
                           key={idx}
                         >
@@ -172,7 +187,11 @@ export default function Calendar() {
                         return (
                           <div
                             className={
-                              props.data === "visible" ? "date" : "oldDay"
+                              props.data === "visible"
+                                ? date >= presentDate
+                                  ? "date"
+                                  : "oldDay"
+                                : "oldDay"
                             }
                             key={idx}
                           >
@@ -254,20 +273,29 @@ export default function Calendar() {
               </option>
             </select>
           </div>
-          <div style={{ display: "flex" }}>
-            {currentDate >= next2Months ? (
-              <Month data="visible" dif={-2} screen="medium-screen" />
-            ) : (
-              <Month data="invisible" dif={-2} screen="medium-screen" />
-            )}
-            {currentDate >= nextMonth ? (
-              <Month data="visible" dif={-1} screen="small-screen" />
-            ) : (
-              <Month data="invisible" dif={-1} screen="small-screen" />
-            )}
-            <Month data="visible" dif={0} screen="" />
-            <Month data="visible" dif={+1} screen="small-screen" />
-            <Month data="visible" dif={+2} screen="medium-screen" />
+          <div style={{ marginLeft: "-121px" }}>
+            <div
+              style={{ display: "flex" }}
+              className={`${animating === true && "slideMonth"} ${
+                animatingReverse === true && "slideMonthReverse"
+              }`}
+            >
+              <Month data="visible" dif={-3} />
+              {currentDate >= next2Months ? (
+                <Month data="visible" dif={-2} screen="medium-screen" />
+              ) : (
+                <Month data="invisible" dif={-2} screen="medium-screen" />
+              )}
+              {currentDate >= nextMonth ? (
+                <Month data="visible" dif={-1} screen="small-screen" />
+              ) : (
+                <Month data="invisible" dif={-1} screen="small-screen" />
+              )}
+              <Month data="visible" dif={0} screen="" />
+              <Month data="visible" dif={+1} screen="small-screen" />
+              <Month data="visible" dif={+2} screen="medium-screen" />
+              <Month dif={+3} data="visible" />
+            </div>
           </div>
         </div>
 
