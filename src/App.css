@@ -15,7 +15,7 @@ button:disabled {
 }
 .slideMonthLong {
   animation-timing-function: smooth;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-name: slideinto;
   position: relative;
 }
@@ -23,7 +23,6 @@ button:disabled {
   from {
     padding-left: 121px;
     margin-right: -121px;
-    /* opacity: 0; */
   }
   to {
   }

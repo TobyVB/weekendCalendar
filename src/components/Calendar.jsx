@@ -74,7 +74,7 @@ export default function Calendar() {
       setAnimatingLong(true);
       setTimeout(() => {
         setAnimatingLong(false);
-      }, 1500);
+      }, 2000);
     }
   };
   const selectMonth = (num) => {
@@ -95,6 +95,13 @@ export default function Calendar() {
   const selectYear = (num) => {
     const newDate = new Date(currentDate);
     newDate.setFullYear(num.target.value);
+    if (
+      currentDate.getMonth() < presentDate.getMonth() &&
+      num.target.value == presentDate.getFullYear()
+    ) {
+      newDate.setFullYear(presentDate.getFullYear() + 1);
+      setYearValue(presentDate.getFullYear());
+    }
     setCurrentDate(newDate);
     setYearValue(newDate.getFullYear());
   };
@@ -363,8 +370,10 @@ export default function Calendar() {
           disabled={
             animating
               ? true
-              : currentDate.getMonth() === 11 &&
-                currentDate.getFullYear() === presentDate.getFullYear() + 3
+              : (currentDate.getMonth() === 11 &&
+                  currentDate.getFullYear() ===
+                    presentDate.getFullYear() + 3) ||
+                animatingLong
               ? true
               : false
           }
@@ -380,7 +389,10 @@ export default function Calendar() {
             animatingReverse
               ? true
               : currentDate.toLocaleDateString() ===
-                presentDate.toLocaleDateString()
+                  presentDate.toLocaleDateString() ||
+                (startMonthForward &&
+                  startMonthForwardDate.toLocaleDateString() ===
+                    currentDate.toLocaleDateString())
               ? true
               : false
           }
@@ -393,8 +405,10 @@ export default function Calendar() {
           disabled={
             animating
               ? true
-              : currentDate.getMonth() === 11 &&
-                currentDate.getFullYear() === presentDate.getFullYear() + 3
+              : (currentDate.getMonth() === 11 &&
+                  currentDate.getFullYear() ===
+                    presentDate.getFullYear() + 3) ||
+                animatingLong
               ? true
               : false
           }
