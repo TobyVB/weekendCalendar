@@ -4,6 +4,9 @@
   padding: 2rem;
   text-align: center;
 }
+button:disabled {
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 .slideMonth {
   animation-duration: 0.25s;

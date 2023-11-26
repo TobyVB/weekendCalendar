@@ -227,7 +227,18 @@ export default function Calendar() {
           justifyContent: "space-around",
         }}
       >
-        <button className="iterate-month" onClick={() => scanMonth(-1)}>
+        <button
+          disabled={
+            animatingReverse
+              ? true
+              : currentDate.toLocaleDateString() ===
+                presentDate.toLocaleDateString()
+              ? true
+              : false
+          }
+          className="iterate-month"
+          onClick={() => scanMonth(-1)}
+        >
           prev
         </button>
         <div className="container">
@@ -321,15 +332,41 @@ export default function Calendar() {
           </div>
         </div>
 
-        <button className="iterate-month" onClick={() => scanMonth(+1)}>
+        <button
+          disabled={
+            animating
+              ? true
+              : currentDate.getMonth() === 11 &&
+                currentDate.getFullYear() === presentDate.getFullYear() + 3
+              ? true
+              : false
+          }
+          className="iterate-month"
+          onClick={() => scanMonth(+1)}
+        >
           next
         </button>
       </div>
       <div style={{ margin: "2em" }}>
-        <button className="iterate-month-sm" onClick={() => scanMonth(-1)}>
+        <button
+          disabled={
+            animatingReverse
+              ? true
+              : currentDate.toLocaleDateString() ===
+                presentDate.toLocaleDateString()
+              ? true
+              : false
+          }
+          className="iterate-month-sm"
+          onClick={() => scanMonth(-1)}
+        >
           prev
         </button>
-        <button className="iterate-month-sm" onClick={() => scanMonth(+1)}>
+        <button
+          disabled={animating ? true : false}
+          className="iterate-month-sm"
+          onClick={() => scanMonth(+1)}
+        >
           next
         </button>
       </div>
