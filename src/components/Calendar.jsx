@@ -19,13 +19,15 @@ export default function Calendar() {
     return months[num];
   };
 
-  // will need to break the animation up into 3 types
-  // one for each of the ends, and one for th middle.
+  // if no more dates available in the present month,
+  // make the current month +1
 
   const presentDate = new Date();
   const nextMonth = new Date();
   const next2Months = new Date();
   presentDate.setHours(0, 0, 0, 0);
+  const startMonthForwardDate = new Date(presentDate);
+  startMonthForwardDate.setMonth(presentDate.getMonth() + 1);
   nextMonth.setHours(0, 0, 0, 0);
   next2Months.setHours(0, 0, 0, 0);
   nextMonth.setMonth(presentDate.getMonth() + 1);
@@ -34,9 +36,11 @@ export default function Calendar() {
   const [monthValue, setMonthValue] = useState(currentDate.getMonth());
   const [yearValue, setYearValue] = useState(currentDate.getFullYear());
   const [animating, setAnimating] = useState(false);
+  const [animatingLong, setAnimatingLong] = useState(false);
   const [animatingReverse, setAnimatingReverse] = useState(false);
+  const [startMonthForward, setStartMonthForward] = useState(false);
 
-  const scanMonth = (num) => {
+  const scanMonth = (num, opt) => {
     if (
       currentDate.getMonth() === presentDate.getMonth() &&
       currentDate.getFullYear() === presentDate.getFullYear() &&
@@ -56,16 +60,21 @@ export default function Calendar() {
     setCurrentDate(newDate);
     setMonthValue(newDate.getMonth());
     setYearValue(newDate.getFullYear());
-    if (num === 1) {
+    if (num === 1 && opt === undefined) {
       setAnimating(true);
       setTimeout(() => {
         setAnimating(false);
-      }, 250);
-    } else {
+      }, 350);
+    } else if (num === -1 && opt === undefined) {
       setAnimatingReverse(true);
       setTimeout(() => {
         setAnimatingReverse(false);
-      }, 250);
+      }, 350);
+    } else if (num === 1 && opt) {
+      setAnimatingLong(true);
+      setTimeout(() => {
+        setAnimatingLong(false);
+      }, 1500);
     }
   };
   const selectMonth = (num) => {
@@ -75,7 +84,7 @@ export default function Calendar() {
     newDate.setMonth(num.target.value);
     if (
       currentDate.getFullYear() === presentDate.getFullYear() &&
-      num.target.value < currentDate.getMonth()
+      num.target.value < presentDate.getMonth()
     ) {
       newDate.setFullYear(newDate.getFullYear() + 1);
       setYearValue((prev) => (prev += 1));
@@ -119,6 +128,21 @@ export default function Calendar() {
       }
       if (thisDate.getDay() == 6) {
         numSaturdays.push(thisDate);
+      }
+    }
+    console.log(numFridays[numFridays.length - 1]);
+    const lastFriday = numFridays[numFridays.length - 1];
+    const lastSaturday = numFridays[numSaturdays.length - 1];
+    if (
+      lastFriday.getDate() < presentDate.getDate() &&
+      lastSaturday.getDate() < presentDate.getDate()
+    ) {
+      console.log("hi");
+      if (
+        currentDate.toLocaleDateString() == presentDate.toLocaleDateString()
+      ) {
+        scanMonth(1, true);
+        setStartMonthForward(true);
       }
     }
     if (numFridays.length < 5) {
@@ -232,7 +256,10 @@ export default function Calendar() {
             animatingReverse
               ? true
               : currentDate.toLocaleDateString() ===
-                presentDate.toLocaleDateString()
+                  presentDate.toLocaleDateString() ||
+                (startMonthForward &&
+                  startMonthForwardDate.toLocaleDateString() ===
+                    currentDate.toLocaleDateString())
               ? true
               : false
           }
@@ -287,9 +314,9 @@ export default function Calendar() {
           <div style={{ marginLeft: "-121px" }}>
             <div
               style={{ display: "flex" }}
-              className={`${animating === true && "slideMonth"} ${
-                animatingReverse === true && "slideMonthReverse"
-              }`}
+              className={`${animating && "slideMonth"} ${
+                animatingReverse && "slideMonthReverse"
+              } ${animatingLong && "slideMonthLong"}`}
             >
               <Month
                 data="visible"
@@ -363,7 +390,14 @@ export default function Calendar() {
           prev
         </button>
         <button
-          disabled={animating ? true : false}
+          disabled={
+            animating
+              ? true
+              : currentDate.getMonth() === 11 &&
+                currentDate.getFullYear() === presentDate.getFullYear() + 3
+              ? true
+              : false
+          }
           className="iterate-month-sm"
           onClick={() => scanMonth(+1)}
         >

@@ -9,7 +9,13 @@ button:disabled {
 }
 
 .slideMonth {
-  animation-duration: 0.25s;
+  animation-duration: 0.35s;
+  animation-name: slideinto;
+  position: relative;
+}
+.slideMonthLong {
+  animation-timing-function: smooth;
+  animation-duration: 1.5s;
   animation-name: slideinto;
   position: relative;
 }
@@ -23,7 +29,7 @@ button:disabled {
   }
 }
 .slideMonthReverse {
-  animation-duration: 0.25s;
+  animation-duration: 0.35s;
   animation-name: slideintoReverse;
   position: relative;
 }
