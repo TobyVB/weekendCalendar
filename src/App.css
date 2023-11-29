@@ -3,6 +3,7 @@
   margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
+  max-height: 100vh;
 }
 button:disabled {
   background-color: rgba(0, 0, 0, 0.5);
@@ -44,11 +45,13 @@ button:disabled {
 
 .container {
   padding: 0.5em;
-  background-color: #bae2f7;
+  background-color: #d6ebf7;
+  /* background-color: white; */
   border-radius: 10px;
-  border: 2px solid black;
+  border: 1px solid black;
   overflow: hidden;
   max-width: 600px;
+  box-shadow: 0px 2px 10px rgb(0, 0, 0);
 }
 
 .date {
@@ -57,13 +60,14 @@ button:disabled {
   font-weight: bold;
   border: 1px solid black;
   height: 50px;
-  background-color: #cdf5fd;
+  /* background-color: #cdf5fd; */
+  background-color: white;
 }
 
 .date h3 {
   line-height: 0;
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .oldDay {
@@ -71,19 +75,22 @@ button:disabled {
   font-weight: bold;
   border: 1px solid black;
   height: 50px;
-  background-color: #e0b0acb1;
+  background-color: #fcd3d3b1;
 }
 .noDate {
   border: 1px solid black;
   height: 50px;
-  background-color: rgba(205, 245, 253, 0.516);
+  /* background-color: rgba(0, 0, 0, 0); */
+  background-color: white;
 }
 .day-title {
   border: 1px solid black;
   margin: 0;
+  /* background-color: #00a9ff; */
   background-color: #00a9ff;
   color: #ffffff;
-  text-shadow: 1px 1px 1px black;
+  /* text-shadow: 1px 1px 1px black; */
+  font-weight: 800;
 }
 
 .vertical-rule {
@@ -95,26 +102,30 @@ button:disabled {
   font-weight: 800;
   border: 1px solid black;
   margin: 0;
+  /* background-color: #00a9ff; */
+  /* text-shadow: 1px 1px 1px black; */
   background-color: #00a9ff;
   color: #ffffff;
-  text-shadow: 1px 1px 1px black;
+  font-weight: 800;
 }
 .month {
   border: 1px solid black;
   margin: 0;
-  color: rgba(0, 0, 0, 0.65);
-  background-color: #cdf5fd;
+  color: rgba(0, 0, 0, 0.75);
+  /* background-color: #cdf5fd; */
+  background-color: white;
 }
 .iterate-month,
 .iterate-month-sm {
-  border: 2px solid rgb(0, 0, 0);
+  border: 1px solid rgb(0, 0, 0);
+  box-shadow: 0px 2px 5px black;
   align-self: flex-start;
   margin: auto;
   background: #00a9ff;
   margin: auto 2em;
   font-weight: 900;
   color: #ffffff;
-  text-shadow: 1px 1px 1px black;
+  /* text-shadow: 1px 1px 1px black; */
 }
 /* .spacer-div {
   width: 5px;
@@ -122,7 +133,8 @@ button:disabled {
   height: 100%;
 } */
 .title {
-  text-shadow: 1px 2px 1px black;
+  text-shadow: 1px 1px 1px black;
+  /* color: #00a9ff; */
   color: #00a9ff;
 }
 @media screen and (min-width: 500px) {
@@ -131,6 +143,9 @@ button:disabled {
   }
   .hide-bg {
     display: none;
+  }
+  .title {
+    margin-bottom: 1em;
   }
 }
 @media screen and (max-width: 500px) {
@@ -149,12 +164,13 @@ button:disabled {
     display: none;
   }
   .iterate-month-sm {
-    margin: 0.5em;
+    margin: 0 1.5em;
   }
   .title {
     /* font-size: 2rem; */
     /* margin-top: 2.5em; */
-    padding-bottom: 1em;
+    margin-bottom: 0.5em;
+    padding: 0;
   }
   .container {
     max-width: 359px;

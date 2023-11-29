@@ -243,7 +243,7 @@ export default function Calendar() {
     // Your styles here
     backgroundColor: "#00a9ff",
     color: "#ffffff",
-    textShadow: "1px 1px 1px black",
+    // textShadow: "1px 1px 1px black",
     padding: "5px",
     fontSize: "1rem",
     fontWeight: "900",
